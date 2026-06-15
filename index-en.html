@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rizal Surya Pratama — Infrastructure &amp; Network Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B3A6B;--navy-dark:#0f2347;--navy-light:#2952a3;--navy-soft:#e8eef8;--teal:#0ea5a0;--accent:#2563eb;--accent-light:#dbeafe;--bg:#f8fafc;--bg2:#ffffff;--bg3:#f1f5f9;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:#e2e8f0;--shadow:rgba(27,58,107,0.08);--shadow-md:rgba(27,58,107,0.14);--card:#ffffff;--nav-bg:rgba(248,250,252,0.92);}
+[data-theme="dark"]{--bg:#0d1421;--bg2:#111c2e;--bg3:#172035;--text:#f0f4ff;--text2:#94a3b8;--text3:#475569;--border:#1e2d47;--shadow:rgba(0,0,0,0.3);--shadow-md:rgba(0,0,0,0.4);--card:#111c2e;--nav-bg:rgba(13,20,33,0.95);--navy-soft:#1a2d4a;--accent-light:#1e3a5f;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.7;transition:background 0.3s,color 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:0 5%;height:68px;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background 0.3s;}
+.nav-logo{font-weight:800;font-size:1.05rem;color:var(--navy);}
+[data-theme="dark"] .nav-logo{color:#7ab3ff;}
+.nav-links{display:flex;align-items:center;gap:1.6rem;list-style:none;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s;}
+.nav-links a:hover{color:var(--navy);}
+[data-theme="dark"] .nav-links a:hover{color:#7ab3ff;}
+.theme-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:0.82rem;font-weight:500;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;white-space:nowrap;}
+.theme-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text2);border-radius:2px;}
+#hero{min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;background:linear-gradient(135deg,var(--bg) 0%,var(--navy-soft) 100%);position:relative;overflow:hidden;}
+#hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,0.08) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:center;max-width:1100px;margin:0 auto;width:100%;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--accent-light);color:var(--navy);padding:6px 16px;border-radius:20px;font-size:0.82rem;font-weight:600;margin-bottom:1.5rem;}
+[data-theme="dark"] .hero-tag{color:#7ab3ff;}
+.dot{width:7px;height:7px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite;display:inline-block;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.4);opacity:0.7;}}
+h1{font-size:clamp(2.1rem,3.8vw,3.1rem);font-weight:800;line-height:1.15;letter-spacing:-1px;margin-bottom:1.2rem;}
+h1 .hl{color:var(--navy);}
+[data-theme="dark"] h1 .hl{color:#7ab3ff;}
+.hero-desc{font-size:0.97rem;color:var(--text2);max-width:500px;margin-bottom:2rem;line-height:1.85;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-solid{padding:0.75rem 1.8rem;background:var(--navy);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;border:2px solid var(--navy);transition:all 0.2s;}
+.btn-solid:hover{background:var(--navy-dark);transform:translateY(-1px);}
+.btn-outline{padding:0.75rem 1.8rem;background:transparent;color:var(--navy);border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;border:2px solid var(--navy);transition:all 0.2s;}
+[data-theme="dark"] .btn-outline{color:#7ab3ff;border-color:#7ab3ff;}
+.btn-outline:hover{background:var(--navy);color:#fff;transform:translateY(-1px);}
+[data-theme="dark"] .btn-outline:hover{background:#7ab3ff;color:#0d1421;}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+.hstat-num{font-size:1.9rem;font-weight:800;color:var(--navy);font-family:'DM Mono',monospace;line-height:1;}
+[data-theme="dark"] .hstat-num{color:#7ab3ff;}
+.hstat-label{font-size:0.76rem;color:var(--text2);margin-top:4px;font-weight:500;}
+.hero-photo-wrap{position:relative;display:flex;justify-content:center;}
+.hero-photo-frame{width:300px;height:380px;border-radius:16px 16px 80px 16px;overflow:hidden;box-shadow:0 20px 60px var(--shadow-md);border:4px solid var(--card);}
+.hero-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.photo-badge{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:30px;font-size:0.82rem;font-weight:600;white-space:nowrap;box-shadow:0 4px 20px var(--shadow-md);display:flex;align-items:center;gap:8px;}
+.badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;display:inline-block;}
+section{padding:5.5rem 5%;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-tag{display:inline-block;background:var(--navy-soft);color:var(--navy);padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:1rem;}
+[data-theme="dark"] .section-tag{background:var(--accent-light);color:#7ab3ff;}
+h2{font-size:clamp(1.8rem,3vw,2.3rem);font-weight:800;letter-spacing:-0.5px;margin-bottom:0.75rem;}
+.section-sub{color:var(--text2);font-size:0.95rem;max-width:540px;margin-bottom:2.5rem;line-height:1.8;}
+#about{background:var(--bg2);}
+.about-grid{display:grid;grid-template-columns:260px 1fr;gap:4rem;align-items:start;}
+.about-img-wrap{position:relative;}
+.about-img{width:100%;border-radius:12px;box-shadow:0 8px 40px var(--shadow-md);}
+.about-text p{color:var(--text2);line-height:1.85;margin-bottom:1rem;font-size:0.95rem;}
+.about-text p strong{color:var(--text);font-weight:700;}
+.about-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.5rem;}
+.about-tag{padding:6px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;font-size:0.82rem;font-weight:500;color:var(--text2);}
+#certs{background:var(--bg3);}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem;transition:all 0.25s;position:relative;overflow:hidden;}
+.cert-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px var(--shadow-md);border-color:var(--navy);}
+.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--teal));opacity:0;transition:opacity 0.25s;}
+.cert-card:hover::before{opacity:1;}
+.cert-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:0.75rem;}
+.badge-mikrotik{background:#fff3e0;color:#e65100;}
+[data-theme="dark"] .badge-mikrotik{background:#2d1a00;color:#ffa040;}
+.badge-bnsp{background:#e8f5e9;color:#1b5e20;}
+[data-theme="dark"] .badge-bnsp{background:#0a2010;color:#66bb6a;}
+.badge-comptia{background:#e3f2fd;color:#0d47a1;}
+[data-theme="dark"] .badge-comptia{background:#0a1525;color:#64b5f6;}
+.badge-other{background:var(--navy-soft);color:var(--navy);}
+[data-theme="dark"] .badge-other{background:var(--accent-light);color:#7ab3ff;}
+.cert-name{font-size:0.98rem;font-weight:700;margin-bottom:0.3rem;color:var(--text);}
+.cert-issuer{font-size:0.79rem;color:var(--text2);}
+.cert-date{font-size:0.73rem;color:var(--text3);margin-top:0.4rem;font-family:'DM Mono',monospace;}
+#skills{background:var(--bg2);}
+.skills-tabs{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+.skill-tab{padding:8px 20px;border-radius:8px;font-weight:600;font-size:0.88rem;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all 0.2s;font-family:'Plus Jakarta Sans',sans-serif;}
+.skill-tab.active,.skill-tab:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.skills-panel{display:none;}
+.skills-panel.active{display:block;}
+.skills-general-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem;}
+.skill-pill{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;display:flex;align-items:center;gap:12px;transition:all 0.2s;}
+.skill-pill:hover{border-color:var(--navy);background:var(--navy-soft);}
+[data-theme="dark"] .skill-pill:hover{background:var(--accent-light);}
+.pill-icon{width:36px;height:36px;border-radius:8px;background:var(--navy-soft);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+[data-theme="dark"] .pill-icon{background:var(--accent-light);}
+.pill-name{font-weight:600;font-size:0.85rem;color:var(--text);}
+.pill-level{font-size:0.72rem;color:var(--text2);}
+.skills-adv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.adv-group{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+.adv-group-title{font-size:0.75rem;font-weight:700;color:var(--navy);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.2rem;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;}
+[data-theme="dark"] .adv-group-title{color:#7ab3ff;}
+.adv-group-title::before{content:'';width:16px;height:2px;background:var(--navy);display:inline-block;}
+[data-theme="dark"] .adv-group-title::before{background:#7ab3ff;}
+.adv-item{margin-bottom:1rem;}
+.adv-item:last-child{margin-bottom:0;}
+.adv-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.adv-name{font-size:0.85rem;font-weight:600;color:var(--text);}
+
+
+
+.adv-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.adv-tag{font-size:0.65rem;padding:2px 8px;border-radius:4px;background:var(--navy-soft);color:var(--navy);font-weight:600;font-family:'DM Mono',monospace;}
+[data-theme="dark"] .adv-tag{background:var(--accent-light);color:#7ab3ff;}
+#portfolio{background:var(--bg3);}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem;}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.25s;}
+.proj-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px var(--shadow-md);}
+.proj-card-top{height:150px;display:flex;align-items:center;justify-content:center;position:relative;}
+.proj-num{position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.35);color:#fff;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-family:'DM Mono',monospace;}
+.proj-icon{font-size:2.8rem;}
+.proj-body{padding:1.3rem;}
+.proj-title{font-size:0.97rem;font-weight:700;margin-bottom:0.5rem;color:var(--text);}
+.proj-desc{font-size:0.83rem;color:var(--text2);line-height:1.75;margin-bottom:1rem;}
+.proj-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.proj-tag{font-size:0.7rem;padding:3px 9px;border-radius:4px;background:var(--navy-soft);color:var(--navy);font-weight:600;}
+[data-theme="dark"] .proj-tag{background:var(--accent-light);color:#7ab3ff;}
+.mikrotik-showcase{margin-top:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;}
+.showcase-img{width:80%;height:280px;object-fit:cover;object-position:center top;}
+.showcase-text{padding:2rem;display:flex;flex-direction:column;justify-content:center;}
+.showcase-text h3{font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;color:var(--text);}
+.showcase-text p{font-size:0.87rem;color:var(--text2);line-height:1.8;}
+#services{background:var(--bg2);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.2rem;}
+.svc-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all 0.25s;}
+.svc-card:hover{border-color:var(--navy);background:var(--navy-soft);transform:translateY(-2px);}
+[data-theme="dark"] .svc-card:hover{background:var(--accent-light);}
+.svc-icon{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem;}
+.svc-title{font-size:0.97rem;font-weight:700;margin-bottom:0.5rem;color:var(--text);}
+.svc-desc{font-size:0.83rem;color:var(--text2);line-height:1.75;}
+#experience{background:var(--bg3);}
+.exp-list{display:flex;flex-direction:column;}
+.exp-item{display:grid;grid-template-columns:170px 1fr;border-left:2px solid var(--border);position:relative;padding-bottom:2.5rem;}
+.exp-item:last-child{padding-bottom:0;}
+.exp-item::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--navy);border:2px solid var(--bg3);}
+.exp-left{padding-left:1.5rem;padding-right:1rem;}
+.exp-date{font-family:'DM Mono',monospace;font-size:0.74rem;color:var(--navy);font-weight:500;line-height:1.5;}
+[data-theme="dark"] .exp-date{color:#7ab3ff;}
+.exp-company{font-size:0.76rem;color:var(--text2);margin-top:4px;line-height:1.5;}
+.exp-dur{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text3);margin-top:3px;}
+.exp-role{font-size:1.01rem;font-weight:700;color:var(--text);margin-bottom:0.4rem;}
+.exp-desc{font-size:0.86rem;color:var(--text2);line-height:1.8;}
+.exp-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:0.75rem;}
+.exp-tag{font-size:0.7rem;padding:2px 10px;border-radius:4px;background:var(--navy-soft);color:var(--navy);font-weight:600;}
+[data-theme="dark"] .exp-tag{background:var(--accent-light);color:#7ab3ff;}
+#contact{background:var(--navy);}
+#contact .section-tag{background:rgba(255,255,255,0.15);color:#fff;}
+#contact h2{color:#fff;}
+.contact-links-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:2.5rem;max-width:500px;}
+.contact-links-card h3{color:#fff;font-size:1.15rem;font-weight:700;margin-bottom:0.5rem;}
+.contact-links-card p{color:rgba(255,255,255,0.65);font-size:0.88rem;line-height:1.7;margin-bottom:1.8rem;}
+.contact-links-list{display:flex;flex-direction:column;gap:0.75rem;}
+.clink{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.9rem;font-weight:500;padding:0.85rem 1.2rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);transition:all 0.2s;background:rgba(255,255,255,0.05);}
+.clink:hover{background:rgba(255,255,255,0.13);border-color:rgba(255,255,255,0.28);}
+.clink-icon{font-size:1.1rem;width:24px;text-align:center;}
+.clink-text{flex:1;}
+.clink-label{font-size:0.75rem;color:rgba(255,255,255,0.5);display:block;margin-top:1px;}
+.cv-divider{border-top:1px solid rgba(255,255,255,0.12);margin:1.5rem 0;}
+.cv-label{color:rgba(255,255,255,0.5);font-size:0.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.75rem;}
+.cv-buttons{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.cv-btn{display:flex;align-items:center;gap:10px;flex:1;min-width:180px;background:#fff;color:var(--navy);text-decoration:none;font-weight:700;font-size:0.88rem;padding:0.85rem 1.2rem;border-radius:8px;transition:all 0.2s;}
+.cv-btn:hover{background:#e8eef8;transform:translateY(-1px);}
+.cv-btn-icon{font-size:1.3rem;}
+.cv-btn-text{display:flex;flex-direction:column;line-height:1.3;}
+.cv-btn-sub{font-size:0.7rem;color:var(--text2);font-weight:500;text-transform:none;letter-spacing:0;}
+footer{background:var(--navy-dark);color:rgba(255,255,255,0.5);padding:1.5rem 5%;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;flex-wrap:wrap;gap:1rem;}
+.footer-name{color:rgba(255,255,255,0.85);font-weight:600;}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-up.show{opacity:1;transform:translateY(0);}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.hero-photo-wrap{display:none;}.about-grid{grid-template-columns:1fr;}.mikrotik-showcase{grid-template-columns:1fr;}.exp-item{grid-template-columns:1fr;}.exp-left{padding-left:1.5rem;margin-bottom:0.5rem;}}
+@media(max-width:640px){nav{padding:0 4%;}.nav-links{display:none;}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(12px);padding:1rem 5%;border-bottom:1px solid var(--border);gap:1rem;z-index:199;}.hamburger{display:flex;}section{padding:4rem 4%;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Rizal Surya Pratama</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li><li><a href="#certs">Certifications</a></li><li><a href="#skills">Skills</a></li><li><a href="#portfolio">Portfolio</a></li><li><a href="#services">Services</a></li><li><a href="#experience">Experience</a></li><li><a href="#contact">Contact</a></li>
+    <li><a href="index.html">🇮🇩 Bahasa Indonesia</a></li>
+    <li><button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <h2>IT Support | Linux System Administrator | Network Engineer | Infrastructure Engineer | IT Trainer</h2>
+      <p class="hero-desc">Focus on computer networking, Linux systems, and IT education. As a MikroTik Academy Trainer, I actively develop technical skills and share knowledge in networking and system administration.</p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn-solid">View Portfolio</a>
+        <a href="#contact" class="btn-outline">Contact Me</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hstat-num">8+</div><div class="hstat-label">Certifications</div></div>
+        <div><div class="hstat-num">20+</div><div class="hstat-label">Technical Skills</div></div>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <img src="photo-formal.jpg" alt="Rizal Surya Pratama">
+      </div>
+      <div class="photo-badge"><span class="badge-dot"></span> Open to Work</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid fade-up">
+      <div class="about-img-wrap">
+        <img src="photo-introduce.jpg" alt="Rizal Surya Pratama" class="about-img">
+      </div>
+      <div class="about-text">
+        <div class="section-tag">About Me</div>
+        <h2>IT Professional Grown from the Field</h2>
+        <p>I'm <strong>Rizal Surya Pratama</strong>, an Infrastructure &amp; Network Engineer based in Bogor, West Java. My IT journey started in vocational school, from computer repair, to holding international certifications.</p>
+        <p>I'm currently teaching while building my industry IT career in parallel. I believe the best technology is the one that can be well understood and maintained by its users.</p>
+        <p>With a combination of <strong>deep technical expertise</strong> and proven communication skills, I'm ready to contribute in a wider industry environment.</p>
+        <div class="about-tags"><span class="about-tag">Bogor, West Java</span><span class="about-tag">Information Systems Graduate</span><span class="about-tag">Open to Work</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-tag">Certifications</div>
+      <h2>Official Credentials</h2>
+      <p class="section-sub">Each certification is proof of competence recognized nationally and internationally.</p>
+    </div>
+    <div class="certs-grid fade-up">
+      <div class="cert-card"><span class="cert-badge badge-mikrotik">MikroTik</span><div class="cert-name">Academy Trainer</div><div class="cert-issuer">MikroTik Certified Academy Trainer</div><div class="cert-date">Nov 2025 – Nov 2028 · ID: ACTR2097</div></div>
+      <div class="cert-card"><span class="cert-badge badge-mikrotik">MikroTik</span><div class="cert-name">MTCRE</div><div class="cert-issuer">MikroTik Certified Routing Engineer</div><div class="cert-date">Oct 2025 – Oct 2028 · ID: 2510RE9447</div></div>
+      <div class="cert-card"><span class="cert-badge badge-mikrotik">MikroTik</span><div class="cert-name">MTCNA</div><div class="cert-issuer">MikroTik Certified Network Associate</div><div class="cert-date">Oct 2025 – Oct 2028 · ID: 2510NA6613</div></div>
+      <div class="cert-card"><span class="cert-badge badge-bnsp">BNSP</span><div class="cert-name">Network &amp; Infrastructure</div><div class="cert-issuer">Badan Nasional Sertifikasi Profesi</div><div class="cert-date">Aug 2020 · Reg: ICT.294.0008594.2020</div></div>
+      <div class="cert-card"><span class="cert-badge badge-bnsp">BNSP</span><div class="cert-name">Software Development</div><div class="cert-issuer">Badan Nasional Sertifikasi Profesi</div><div class="cert-date">Mar 2023 · Reg: TIK.556.00057.2023</div></div>
+      <div class="cert-card"><span class="cert-badge badge-comptia">CompTIA</span><div class="cert-name">CySA+ (CS0-002)</div><div class="cert-issuer">Cybrary</div><div class="cert-date">Jan 2024</div></div>
+      <div class="cert-card"><span class="cert-badge badge-other">Cybersecurity</span><div class="cert-name">Cybersecurity Training</div><div class="cert-issuer">MicroMentor Indonesia — 3 Sessions</div><div class="cert-date">Mar 2023 · Assets, Passwords &amp; Phishing, Backup</div></div>
+      <div class="cert-card"><span class="cert-badge badge-other">Gov</span><div class="cert-name">PANDU Indonesia</div><div class="cert-issuer">Digital Talent Scholarship — Cyber Security</div><div class="cert-date">Dec 2023</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-tag">Skills</div>
+      <h2>What I Master</h2>
+      <p class="section-sub">General overview for everyone, and technical details for fellow IT professionals.</p>
+    </div>
+    <div class="skills-tabs">
+      <button class="skill-tab active" onclick="switchTab('general')">Overview</button>
+      <button class="skill-tab" onclick="switchTab('advanced')">Technical Details</button>
+    </div>
+    <div class="skills-panel active" id="panel-general">
+      <div class="skills-general-grid"><div class="skill-pill"><div class="pill-icon">🌐</div><div><div class="pill-name">Computer Networking</div><div class="pill-level">Advanced</div></div></div><div class="skill-pill"><div class="pill-icon">🔧</div><div><div class="pill-name">Router Configuration</div><div class="pill-level">Expert</div></div></div><div class="skill-pill"><div class="pill-icon">🐧</div><div><div class="pill-name">Linux Server</div><div class="pill-level">Advanced</div></div></div><div class="skill-pill"><div class="pill-icon">🛡️</div><div><div class="pill-name">Network Security</div><div class="pill-level">Intermediate</div></div></div><div class="skill-pill"><div class="pill-icon">💻</div><div><div class="pill-name">PC Repair &amp; Maintenance</div><div class="pill-level">Expert</div></div></div><div class="skill-pill"><div class="pill-icon">📡</div><div><div class="pill-name">CCTV Installation</div><div class="pill-level">Intermediate</div></div></div><div class="skill-pill"><div class="pill-icon">🔍</div><div><div class="pill-name">Troubleshooting IT</div><div class="pill-level">Expert</div></div></div><div class="skill-pill"><div class="pill-icon">☁️</div><div><div class="pill-name">Virtualization</div><div class="pill-level">Intermediate</div></div></div><div class="skill-pill"><div class="pill-icon">🌍</div><div><div class="pill-name">Web Development</div><div class="pill-level">Intermediate</div></div></div><div class="skill-pill"><div class="pill-icon">📊</div><div><div class="pill-name">System Monitoring</div><div class="pill-level">Intermediate</div></div></div></div>
+    </div>
+    <div class="skills-panel" id="panel-advanced">
+      <div class="skills-adv-grid">
+        <div class="adv-group">
+          <div class="adv-group-title">Networking</div>
+          <div class="adv-item"><div class="adv-name">Switching, VLAN & Bridging</div><div class="adv-tags"><span class="adv-tag">802.1Q</span><span class="adv-tag">Trunk</span><span class="adv-tag">Access Port</span><span class="adv-tag">Bridge</span></div></div><div class="adv-item"><div class="adv-name">IP Addressing, DHCP & Network Management</div><div class="adv-tags"><span class="adv-tag">IPv4</span><span class="adv-tag">Subnetting</span><span class="adv-tag">DHCP Server</span><span class="adv-tag">IP Pool</span></div></div><div class="adv-item"><div class="adv-name">Routing (Static & Dynamic)</div><div class="adv-tags"><span class="adv-tag">Static Route</span><span class="adv-tag">OSPF</span><span class="adv-tag">BGP</span><span class="adv-tag">RIP</span></div></div><div class="adv-item"><div class="adv-name">NAT, Firewall & Access Control</div><div class="adv-tags"><span class="adv-tag">Masquerade</span><span class="adv-tag">Filter Rules</span><span class="adv-tag">Mangle</span><span class="adv-tag">ACL</span></div></div><div class="adv-item"><div class="adv-name">QoS & Traffic Management</div><div class="adv-tags"><span class="adv-tag">Queue Tree</span><span class="adv-tag">Simple Queue</span><span class="adv-tag">Bandwidth</span><span class="adv-tag">Shaping</span></div></div><div class="adv-item"><div class="adv-name">Wireless Networking</div><div class="adv-tags"><span class="adv-tag">AP Mode</span><span class="adv-tag">Station</span><span class="adv-tag">SSID</span><span class="adv-tag">WPA2</span></div></div><div class="adv-item"><div class="adv-name">Tunnels & VPN</div><div class="adv-tags"><span class="adv-tag">WireGuard</span><span class="adv-tag">OpenVPN</span><span class="adv-tag">IPSec</span><span class="adv-tag">EoIP</span></div></div>
+        </div>
+        <div class="adv-group">
+          <div class="adv-group-title">Linux System Administration</div>
+          <div class="adv-item"><div class="adv-name">Apache Web Server</div><div class="adv-tags"><span class="adv-tag">VirtualHost</span><span class="adv-tag">SSL</span><span class="adv-tag">mod_rewrite</span><span class="adv-tag">.htaccess</span></div></div><div class="adv-item"><div class="adv-name">Database Server</div><div class="adv-tags"><span class="adv-tag">MySQL</span><span class="adv-tag">MariaDB</span><span class="adv-tag">phpMyAdmin</span><span class="adv-tag">SQL</span></div></div><div class="adv-item"><div class="adv-name">Proxy Server</div><div class="adv-tags"><span class="adv-tag">Squid</span><span class="adv-tag">Nginx</span><span class="adv-tag">Reverse Proxy</span><span class="adv-tag">Cache</span></div></div><div class="adv-item"><div class="adv-name">File Sharing Server (Samba)</div><div class="adv-tags"><span class="adv-tag">SMB</span><span class="adv-tag">CIFS</span><span class="adv-tag">Share</span><span class="adv-tag">Permissions</span></div></div><div class="adv-item"><div class="adv-name">DNS Server (BIND9)</div><div class="adv-tags"><span class="adv-tag">Zone File</span><span class="adv-tag">A Record</span><span class="adv-tag">MX</span><span class="adv-tag">PTR</span></div></div><div class="adv-item"><div class="adv-name">Backup & Recovery</div><div class="adv-tags"><span class="adv-tag">rsync</span><span class="adv-tag">Clonezilla</span><span class="adv-tag">Bacula</span><span class="adv-tag">Cron</span></div></div><div class="adv-item"><div class="adv-name">System Automation</div><div class="adv-tags"><span class="adv-tag">Cron</span><span class="adv-tag">At</span><span class="adv-tag">Batch</span><span class="adv-tag">Shell Script</span></div></div><div class="adv-item"><div class="adv-name">File Transfer & Network Security</div><div class="adv-tags"><span class="adv-tag">SFTP</span><span class="adv-tag">SCP</span><span class="adv-tag">SSH Hardening</span><span class="adv-tag">iptables</span></div></div><div class="adv-item"><div class="adv-name">Mail Server (Zimbra)</div><div class="adv-tags"><span class="adv-tag">SMTP</span><span class="adv-tag">IMAP</span><span class="adv-tag">Webmail</span><span class="adv-tag">Zimbra CS</span></div></div>
+        </div>
+        <div class="adv-group">
+          <div class="adv-group-title">Cybersecurity</div>
+          <div class="adv-item"><div class="adv-name">Network Security &amp; Hardening</div><div class="adv-tags"><span class="adv-tag">Firewall</span><span class="adv-tag">IDS/IPS</span><span class="adv-tag">SSH Hardening</span><span class="adv-tag">iptables</span></div></div><div class="adv-item"><div class="adv-name">Cybercrime Investigation</div><div class="adv-tags"><span class="adv-tag">Digital Forensics</span><span class="adv-tag">Log Analysis</span><span class="adv-tag">Incident Response</span></div></div><div class="adv-item"><div class="adv-name">Cyber Defense</div><div class="adv-tags"><span class="adv-tag">Threat Modeling</span><span class="adv-tag">SIEM</span><span class="adv-tag">Vulnerability Assessment</span></div></div><div class="adv-item"><div class="adv-name">Penetration Testing</div><div class="adv-tags"><span class="adv-tag">Nmap</span><span class="adv-tag">CVE Analysis</span><span class="adv-tag">Apache Spark CVE</span></div></div><div class="adv-item"><div class="adv-name">Backup &amp; Disaster Recovery</div><div class="adv-tags"><span class="adv-tag">Backup Strategy</span><span class="adv-tag">Clonezilla</span><span class="adv-tag">rsync</span><span class="adv-tag">Business Continuity</span></div></div><div class="adv-item"><div class="adv-name">Passwords &amp; Phishing Awareness</div><div class="adv-tags"><span class="adv-tag">Password Policy</span><span class="adv-tag">MFA</span><span class="adv-tag">Social Engineering</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-tag">Portfolio</div>
+      <h2>Real Projects &amp; Labs</h2>
+      <p class="section-sub">Built, configured, and documented hands-on — not just theory on paper.</p>
+    </div>
+    <div class="portfolio-grid fade-up">
+      <!-- 1 -->
+      <div class="proj-card"><div class="proj-card-top" style="background:linear-gradient(135deg,#1B3A6B,#2952a3)"><span class="proj-num">01</span><img src="img/portfolio/1.png" alt="Linux Server" 
+       style="width:100%; height:150px; object-fit:cover; object-position:center; display:block;"></div><div class="proj-body"><div class="proj-title">Computer Networking Education & Training</div><div class="proj-desc">Providing guidance and hands-on training for vocational high school students to develop competencies in computer networking, telecommunications, and network administration.</div><div class="proj-tags"><span class="proj-tag">Computer Networking Fundamentals</span><span class="proj-tag">MikroTik Administration</span><span class="proj-tag">Cisco Packet Tracer</span></div></div></div>
+     
+      <!-- 2 -->
+      <div class="proj-card"><div class="proj-card-top" style="background:linear-gradient(135deg,#0ea5a0,#0d6e6a)"><span class="proj-num">02</span><img src="img/portfolio/2.png" alt="Linux Server" 
+       style="width:100%; height:150px; object-fit:cover; object-position:center; display:block;"></div><div class="proj-body"><div class="proj-title">Linux Server Infrastructure Lab</div><div class="proj-desc">Full server setup via VM: DNS (BIND9), DHCP, Samba, Apache, Zimbra Mail Server, SSH hardening.</div><div class="proj-tags"><span class="proj-tag">Ubuntu</span><span class="proj-tag">BIND9</span><span class="proj-tag">Zimbra</span><span class="proj-tag">VirtualBox</span></div></div></div>
+     
+      <!-- 3 -->
+      <div class="proj-card"><div class="proj-card-top" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)"><span class="proj-num">03</span><img src="img/portfolio/3.png" alt="Netowk Topology" 
+       style="width:100%; height:150px; object-fit:cover; object-position:center; display:block;"></div><div class="proj-body"><div class="proj-title">Multi-Unit Enterprise Network</div><div class="proj-desc">Enterprise topology. dual ISP failover, ASA firewall with DMZ, Site-to-Site IPSec VPN, OSPF, and EtherChannel core/distribution layers.</div><div class="proj-tags"><span class="proj-tag">Cisco</span><span class="proj-tag">OSPF</span><span class="proj-tag">MikroTik</span><span class="proj-tag">VLAN Segmentation</span><span class="proj-tag">IPSec VPN</span><span class="proj-tag">EtherChannel</span></div></div></div>
+     
+      <!-- 4 -->
+      <div class="proj-card"><div class="proj-card-top" style="background:linear-gradient(135deg,#374151,#6b7280)"><span class="proj-num">04</span><img src="img/portfolio/4.png" alt="Zabbix" 
+            style="width:100%; height:150px; object-fit:cover; object-position:center; display:block;"></div><div class="proj-body"><div class="proj-title">Network Monitoring with Zabbix</div><div class="proj-desc">Zabbix on Linux VM for RouterBoard monitoring via SNMP, automated alerting, Grafana dashboard.</div><div class="proj-tags"><span class="proj-tag">Zabbix</span><span class="proj-tag">SNMP</span><span class="proj-tag">CentOS</span><span class="proj-tag">Grafana</span></div></div></div>
+     
+      <!-- 5 -->
+      <div class="proj-card"><div class="proj-card-top" style="background:linear-gradient(135deg,#374151,#6b7280)"><span class="proj-num">05</span><img src="img/portfolio/5.png" alt="Instalasi CCTV" 
+       style="width:100%; height:150px; object-fit:cover; object-position:center; display:block;"></div><div class="proj-body"><div class="proj-title">CCTV Installation</div><div class="proj-desc">Installed and configured an analog CCTV surveillance system for a vehicle parking and storage business.</div><div class="proj-tags"><span class="proj-tag">CCTV</span><span class="proj-tag">Coaxial/UTP</span></div></div></div>
+
+    <!-- 6 -->
+      <div class="proj-card"><div class="proj-card-top" style="background:linear-gradient(135deg,#374151,#6b7280)"><span class="proj-num">06</span><img src="img/portfolio/6.png" alt="Repository Github" 
+       style="width:100%; height:150px; object-fit:cover; object-position:center; display:block;"></div><div class="proj-body"><div class="proj-title">Project Management</div><div class="proj-desc">Designing various web-based applications required by companies or individual</div><div class="proj-tags"><span class="proj-tag">HTML/CSS/Javascript</span><span class="proj-tag">PHP Native</span><span class="proj-tag">Laravel</span><span class="proj-tag">Codeigniter</span><span class="proj-tag">MySQL</span><span class="proj-tag">Apache</span></div></div></div>
+
+    </div>
+    <div class="mikrotik-showcase fade-up">
+      <img src="photo-teaching.jpg" alt="Rizal mengajar MikroTik" class="showcase-img">
+      <div class="showcase-text"><h3>MikroTik Academy Trainer</h3><p>I don't just use MikroTik. I train others to master it. As an officially certified Academy Trainer, I'm trusted to evaluate and certify MTCNA candidates.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-tag">Services</div>
+      <h2>How I Can Help</h2>
+      <p class="section-sub">For companies, SMBs, or anyone who needs solid IT infrastructure.</p>
+    </div>
+    <div class="services-grid fade-up"><div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-title">Network Design &amp; Setup</div><div class="svc-desc">Network design and configuration from scratch — MikroTik, VLAN, routing, firewall, and bandwidth management.</div></div><div class="svc-card"><div class="svc-icon">🐧</div><div class="svc-title">Linux Server Administration</div><div class="svc-desc">Linux server setup and management — web server, DNS, proxy, mail server, and automated backups.</div></div><div class="svc-card"><div class="svc-icon">📡</div><div class="svc-title">IT Infrastructure Consulting</div><div class="svc-desc">IT infrastructure audit and recommendations for small to medium businesses.</div></div><div class="svc-card"><div class="svc-icon">📊</div><div class="svc-title">Network Monitoring Setup</div><div class="svc-desc">Zabbix or Grafana implementation to detect network issues before they impact operations.</div></div><div class="svc-card"><div class="svc-icon">🔧</div><div class="svc-title">Troubleshooting &amp; Recovery</div><div class="svc-desc">Fast diagnosis and resolution of network and server issues — with full documentation.</div></div><div class="svc-card"><div class="svc-icon">🎓</div><div class="svc-title">MikroTik Training</div><div class="svc-desc">Official MikroTik training by internationally certified Academy Trainer.</div></div></div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-tag">Experience</div>
+      <h2>Work Experience</h2>
+      <p class="section-sub">Real track record in the field — from technician to internationally certified technical trainer.</p>
+    </div>
+    <div class="exp-list fade-up">
+<div class="exp-item">
+  <div class="exp-left">
+    <div class="exp-date">Jan 2024 – Present</div>
+    <div class="exp-dur" data-start="2024-1" data-ongoing="elapsed" data-yr="yr" data-mo="mo"></div>
+    <div class="exp-company">SMKS Dewantara Cibinong<br>Full-time · Bogor</div>
+  </div>
+  <div class="exp-right">
+    <div class="exp-role">Computer Teacher</div>
+    <div class="exp-desc">Teaching grades 10–12 in Computer and Network Engineering, aligning curriculum with current industry standards.</div>
+    <div class="exp-tags"><span class="exp-tag">IT Networking</span><span class="exp-tag">Mentoring</span><span class="exp-tag">Curriculum</span></div>
+  </div>
+</div>
+<div class="exp-item">
+  <div class="exp-left">
+    <div class="exp-date">Mar 2019 – Oct 2023</div>
+    <div class="exp-dur">4 yr 8 mo</div>
+    <div class="exp-company">True Techno Cibinong<br>Freelance · Bogor</div>
+  </div>
+  <div class="exp-right">
+    <div class="exp-role">Computer Technician</div>
+    <div class="exp-desc">Handling computer and laptop repair — OS installation, software, hardware and network troubleshooting hands-on.</div>
+    <div class="exp-tags"><span class="exp-tag">Hardware</span><span class="exp-tag">Repair</span><span class="exp-tag">Networking</span></div>
+  </div>
+</div>
+<div class="exp-item">
+  <div class="exp-left">
+    <div class="exp-date">Aug – Nov 2022</div>
+    <div class="exp-dur">4 mo</div>
+    <div class="exp-company">DPR RI<br>Internship · West Jakarta</div>
+  </div>
+  <div class="exp-right">
+    <div class="exp-role">Staff Experts</div>
+    <div class="exp-desc">Supporting Commission IV members of DPR-RI in preparing study materials on Agriculture, Environment, Forestry, and Maritime topics.</div>
+    <div class="exp-tags"><span class="exp-tag">Data Entry</span><span class="exp-tag">Office Admin</span></div>
+  </div>
+</div>
+<div class="exp-item">
+  <div class="exp-left">
+    <div class="exp-date">Jan – Apr 2019</div>
+    <div class="exp-dur">4 mo</div>
+    <div class="exp-company">Universitas Pertahanan Indonesia<br>Apprenticeship · Bogor</div>
+  </div>
+  <div class="exp-right">
+    <div class="exp-role">IT Support Technician</div>
+    <div class="exp-desc">Placed at Pustekom — maintenance, repair, and optimization of computer networks at the Postgraduate Faculty of Defense Technology.</div>
+    <div class="exp-tags"><span class="exp-tag">IT Networking</span><span class="exp-tag">Linux</span><span class="exp-tag">IT Support</span></div>
+  </div>
+</div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <div class="fade-up">
+      <div class="section-tag">Contact</div>
+      <h2>Get in Touch</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.7)">Have a question, project, or want to discuss a job opportunity? Send a message through any of the channels below.</p>
+      <div class="contact-links-card">
+        <h3>Open to new opportunities</h3>
+        <p>I'm open to IT Support, Infrastructure Engineer, Network Engineer, or System Administrator roles.</p>
+        <div class="contact-links-list">
+          <a href="mailto:rizalsuryapratama7@gmail.com" class="clink">
+            <span class="clink-icon">✉️</span>
+            <span class="clink-text">rizalsuryapratama7@gmail.com<span class="clink-label">Email</span></span>
+          </a>
+          <a href="https://www.linkedin.com/in/rizal-sp713/" class="clink" target="_blank" rel="noopener">
+            <span class="clink-icon">💼</span>
+            <span class="clink-text">linkedin.com/in/rizal-sp713<span class="clink-label">LinkedIn</span></span>
+          </a>
+          <a href="https://github.com/rizalpr4" class="clink" target="_blank" rel="noopener">
+            <span class="clink-icon">⌨️</span>
+            <span class="clink-text">github.com/rizalpr4<span class="clink-label">GitHub</span></span>
+          </a>
+        </div>
+        <div class="cv-divider"></div>
+        <div class="cv-label">Download CV</div>
+        <div class="cv-buttons">
+          <a href="cv/CV-Rizal-Surya-Pratama-EN.pdf" class="cv-btn" download>
+            <span class="cv-btn-icon">📄</span>
+            <span class="cv-btn-text">CV - English<span class="cv-btn-sub">PDF · ATS Friendly</span></span>
+          </a>
+          <a href="cv/CV-Rizal-Surya-Pratama-ID.pdf" class="cv-btn" download>
+            <span class="cv-btn-icon">📄</span>
+            <span class="cv-btn-text">CV - Bahasa Indonesia<span class="cv-btn-sub">PDF · ATS Friendly</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 <span class="footer-name">Rizal Surya Pratama</span></span>
+  <span>Infrastructure &amp; Network Engineer · Bogor, Indonesia</span>
+</footer>
+
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var btn=document.getElementById('themeBtn');
+  if(html.dataset.theme==='dark'){
+    html.dataset.theme='light';
+    btn.textContent='🌙 Dark Mode';
+    localStorage.setItem('rzl_theme','light');
+  } else {
+    html.dataset.theme='dark';
+    btn.textContent='☀️ Light Mode';
+    localStorage.setItem('rzl_theme','dark');
+  }
+}
+(function(){
+  var saved=localStorage.getItem('rzl_theme')||'light';
+  document.documentElement.dataset.theme=saved;
+  var btn=document.getElementById('themeBtn');
+  if(btn) btn.textContent=saved==='dark'?'☀️ Light Mode':'🌙 Dark Mode';
+})();
+function switchTab(name){
+  document.querySelectorAll('.skill-tab').forEach(function(t,i){
+    t.classList.toggle('active',i===(name==='general'?0:1));
+  });
+  document.getElementById('panel-general').classList.toggle('active',name==='general');
+  document.getElementById('panel-advanced').classList.toggle('active',name==='advanced');
+}
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+
+// Auto-update durations
+function calcDuration(startYear, startMonth, labelOngoing, labelYr, labelMo) {
+  var now = new Date();
+  var months = (now.getFullYear() - startYear)*12 + (now.getMonth()+1 - startMonth);
+  var yrs = Math.floor(months/12);
+  var mos = months % 12;
+  var parts = [];
+  if(yrs > 0) parts.push(yrs + ' ' + labelYr);
+  if(mos > 0) parts.push(mos + ' ' + labelMo);
+  return (parts.length ? parts.join(' ') : '1 ' + labelMo) + ' ' + labelOngoing;
+}
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('[data-start]').forEach(function(el){
+    var s = el.dataset.start.split('-');
+    var ongoing = el.dataset.ongoing||'';
+    var yr = el.dataset.yr||'yr';
+    var mo = el.dataset.mo||'mo';
+    el.textContent = calcDuration(parseInt(s[0]),parseInt(s[1]),ongoing,yr,mo);
+  });
+});
+
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('show');});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(function(el){obs.observe(el);});
+</script>
+</body>
+</html>
